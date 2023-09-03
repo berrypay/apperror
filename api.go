@@ -5,7 +5,7 @@
  * Author: Sallehuddin Abdul Latif (sallehuddin@berrypay.com)
  * Company: BerryPay (M) Sdn. Bhd.
  * --------------------------------------
- * Last Modified: Tuesday April 18th 2023 16:29:39 +0800
+ * Last Modified: Sunday September 3rd 2023 11:28:31 +0800
  * Modified By: Sallehuddin Abdul Latif (sallehuddin@berrypay.com)
  * --------------------------------------
  * Copyright (c) 2023 BerryPay (M) Sdn. Bhd.
@@ -22,12 +22,12 @@ const (
 )
 
 type APICallError struct {
-	ErrorCode    string `json:"errorCode"`
-	Message      string `json:"message"`
-	StatusCode   int    `json:"statusCode"`
-	ResponseCode string `json:"responseCode"`
-	ResponseBody string `json:"responseBody"`
-	SourceError  error  `json:"sourceError"`
+	ErrorCode    string `json:"errorCode"`    // internal reference
+	Message      string `json:"message"`      // internal message
+	StatusCode   int    `json:"statusCode"`   // http status from API response header
+	ResponseCode string `json:"responseCode"` // optional: received from API if available
+	ResponseBody string `json:"responseBody"` // optional: received from API if available
+	SourceError  error  `json:"sourceError"`  // optional: received from call library if available
 }
 
 func (e *APICallError) Error() string {

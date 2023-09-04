@@ -5,7 +5,7 @@
  * Author: Sallehuddin Abdul Latif (sallehuddin@berrypay.com)
  * Company: BerryPay (M) Sdn. Bhd.
  * --------------------------------------
- * Last Modified: Sunday September 3rd 2023 11:28:31 +0800
+ * Last Modified: Monday September 4th 2023 16:26:14 +0800
  * Modified By: Sallehuddin Abdul Latif (sallehuddin@berrypay.com)
  * --------------------------------------
  * Copyright (c) 2023 BerryPay (M) Sdn. Bhd.
@@ -19,6 +19,7 @@ const (
 	ERR_API_CALL_FAILURE               = "ERR_API_CALL_FAILURE" // general error
 	ERR_API_FAILURE_PAYLOAD_MISSING    = "ERR_API_FAILURE_PAYLOAD_MISSING"
 	ERR_API_FAILURE_SIGNATURE_MISMATCH = "ERR_API_FAILURE_SIGNATURE_MISMATCH"
+	ERR_API_FAILURE_CALL_TIMEOUT       = "ERR_API_FAILURE_CALL_TIMEOUT"
 )
 
 type APICallError struct {
@@ -59,6 +60,17 @@ func NewAPICallFailedPayloadMissingError(message string, statusCode int, respons
 func NewAPICallFailedSignatureMismatchError(message string, statusCode int, responseCode string, responseBody string, err error) *APICallError {
 	return &APICallError{
 		ErrorCode:    ERR_API_FAILURE_SIGNATURE_MISMATCH,
+		Message:      message,
+		StatusCode:   statusCode,
+		ResponseCode: responseCode,
+		ResponseBody: responseBody,
+		SourceError:  err,
+	}
+}
+
+func NewAPICallFailedTimeout(message string, statusCode int, responseCode string, responseBody string, err error) *APICallError {
+	return &APICallError{
+		ErrorCode:    ERR_API_FAILURE_CALL_TIMEOUT,
 		Message:      message,
 		StatusCode:   statusCode,
 		ResponseCode: responseCode,
